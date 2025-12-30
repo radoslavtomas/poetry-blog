@@ -20,8 +20,8 @@ class SourceFactory extends Factory
         
         return [
             'name' => [
-                'sk' => fake()->company(),
-                'en' => fake()->company(),
+                ['lang' => 'sk', 'content' => '<p>' . fake()->company() . '</p>'],
+                ['lang' => 'en', 'content' => '<p>' . fake()->company() . '</p>'],
             ],
             'type' => $type,
             'url' => $type === 'website' ? fake()->url() : null,

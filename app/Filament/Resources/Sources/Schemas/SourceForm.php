@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources\Sources\Schemas;
 
-use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -13,13 +14,32 @@ class SourceForm
     {
         return $schema
             ->components([
-                KeyValue::make('name')
+                Repeater::make('name')
                     ->label('Name (Translations)')
-                    ->keyLabel('Language Code')
-                    ->valueLabel('Source Name')
+                    ->schema([
+                        TextInput::make('lang')
+                            ->label('Language Code')
+                            ->required()
+                            ->maxLength(2),
+                        RichEditor::make('content')
+                            ->label('Source Name')
+                            ->required()
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                            ]),
+                    ])
+                    ->defaultItems(2)
+                    ->default([
+                        ['lang' => 'sk', 'content' => ''],
+                        ['lang' => 'en', 'content' => ''],
+                    ])
                     ->addable(false)
                     ->deletable(false)
-                    ->default(['sk' => '', 'en' => ''])
+                    ->reorderable(false)
+                    ->collapsible()
+                    ->itemLabel(fn (array $state): ?string => strtoupper($state['lang'] ?? 'Translation'))
                     ->required(),
                     
                 Select::make('type')

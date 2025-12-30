@@ -75,12 +75,11 @@ const getAnotherPoem = () => {
     <div class="max-w-3xl mx-auto">
       <div v-if="poem" class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-colors">
         <div class="p-8">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            {{ trans(poem.title) }}
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4" v-html="trans(poem.title)">
           </h1>
           
           <div class="prose dark:prose-invert max-w-none">
-            <pre class="whitespace-pre-wrap font-serif text-lg text-gray-700 dark:text-gray-300 leading-relaxed">{{ displayedBody }}</pre>
+            <div class="whitespace-pre-wrap font-serif text-lg text-gray-700 dark:text-gray-300 leading-relaxed" v-html="displayedBody"></div>
           </div>
           
           <div v-if="shouldShowExcerpt && !showFullPoem" class="mt-4">
@@ -99,13 +98,13 @@ const getAnotherPoem = () => {
                 <Link
                   :href="books.show.url({ book: poem.book.id })"
                   class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                  v-html="trans(poem.book.title)"
                 >
-                  {{ trans(poem.book.title) }}
                 </Link>
               </span>
               <span v-else-if="poem.source">
                 {{ t('published_in') }}:
-                {{ trans(poem.source.name) }}
+                <span v-html="trans(poem.source.name)"></span>
               </span>
               <span v-else class="italic">
                 {{ t('unpublished') }}

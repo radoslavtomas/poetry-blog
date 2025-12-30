@@ -2,56 +2,101 @@
 
 namespace App\Filament\Resources\Poems\Schemas;
 
-use Filament\Forms\Components\KeyValue;
+use App\Filament\Traits\TranslationHelper;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class PoemForm
 {
+    use TranslationHelper;
+
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                KeyValue::make('title')
+                Repeater::make('title')
                     ->label('Title (Translations)')
-                    ->keyLabel('Language Code')
-                    ->valueLabel('Title')
+                    ->schema([
+                        TextInput::make('lang')
+                            ->label('Language Code')
+                            ->required()
+                            ->maxLength(2),
+                        RichEditor::make('content')
+                            ->label('Title')
+                            ->required()
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                            ]),
+                    ])
+                    ->defaultItems(2)
+                    ->default([
+                        ['lang' => 'sk', 'content' => ''],
+                        ['lang' => 'en', 'content' => ''],
+                    ])
                     ->addable(false)
                     ->deletable(false)
-                    ->default(['sk' => '', 'en' => ''])
+                    ->reorderable(false)
+                    ->collapsible()
+                    ->itemLabel(fn (array $state): ?string => strtoupper($state['lang'] ?? 'Translation'))
                     ->required(),
-                    
-                KeyValue::make('body')
+
+                Repeater::make('body')
                     ->label('Body (Translations)')
-                    ->keyLabel('Language Code')
-                    ->valueLabel('Body Text')
+                    ->schema([
+                        TextInput::make('lang')
+                            ->label('Language Code')
+                            ->required()
+                            ->maxLength(2),
+                        RichEditor::make('content')
+                            ->label('Body Text')
+                            ->required()
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                                'bulletList',
+                                'orderedList',
+                                'link',
+                            ]),
+                    ])
+                    ->defaultItems(2)
+                    ->default([
+                        ['lang' => 'sk', 'content' => ''],
+                        ['lang' => 'en', 'content' => ''],
+                    ])
                     ->addable(false)
                     ->deletable(false)
-                    ->default(['sk' => '', 'en' => ''])
+                    ->reorderable(false)
+                    ->collapsible()
+                    ->itemLabel(fn (array $state): ?string => strtoupper($state['lang'] ?? 'Translation'))
                     ->required(),
-                    
+
                 Select::make('book_id')
                     ->label('Book')
                     ->relationship('book', 'id')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->title['sk'] ?? $record->title['en'] ?? 'Unknown')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => self::getTranslation($record->title))
                     ->searchable()
                     ->nullable()
                     ->reactive(),
-                    
+
                 TextInput::make('position_in_book')
                     ->label('Position in Book')
                     ->numeric()
                     ->nullable()
                     ->hidden(fn (callable $get) => !$get('book_id')),
-                    
+
                 Select::make('source_id')
                     ->label('Source')
                     ->relationship('source', 'id')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['sk'] ?? $record->name['en'] ?? 'Unknown')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => self::getTranslation($record->name))
                     ->searchable()
                     ->nullable()
                     ->hidden(fn (callable $get) => $get('book_id')),
-            ]);
+            ])->columns(1);
     }
 }

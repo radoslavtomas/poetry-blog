@@ -45,16 +45,16 @@ const { t, trans } = useTranslation()
             <Link 
               :href="books.show.url({ book: book.id })"
               class="text-xl font-semibold text-indigo-600 dark:text-indigo-400 hover:underline mb-4 block"
+              v-html="trans(book.title)"
             >
-              {{ trans(book.title) }}
             </Link>
             <ul class="space-y-2">
               <li v-for="poem in book.poems" :key="poem.id">
                 <Link
                   :href="poems.show.url({ poem: poem.id })"
                   class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                  v-html="trans(poem.title)"
                 >
-                  {{ trans(poem.title) }}
                 </Link>
               </li>
             </ul>
@@ -69,16 +69,15 @@ const { t, trans } = useTranslation()
         </h2>
         <div class="space-y-8">
           <div v-for="source in poemsBySources" :key="source.id" class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              {{ trans(source.name) }}
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4" v-html="trans(source.name)">
             </h3>
             <ul class="space-y-2">
               <li v-for="poem in source.poems" :key="poem.id">
                 <Link
                   :href="poems.show.url({ poem: poem.id })"
                   class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                  v-html="trans(poem.title)"
                 >
-                  {{ trans(poem.title) }}
                 </Link>
               </li>
             </ul>
@@ -97,8 +96,8 @@ const { t, trans } = useTranslation()
               <Link
                 :href="poems.show.url({ poem: poem.id })"
                 class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                v-html="trans(poem.title)"
               >
-                {{ trans(poem.title) }}
               </Link>
             </li>
           </ul>

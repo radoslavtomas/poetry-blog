@@ -40,8 +40,8 @@ class DatabaseSeeder extends Seeder
         Author::create([
             'name' => 'Janko Hráško',
             'bio' => [
-                'sk' => 'Slovenský básnik a spísovatež. Venoval sa hlavně moderne j poézii a experimental nej literatúre. Jeho diela sú známe pre svoju hžboku filozofickú a emotionálnu intenzitu.',
-                'en' => 'Slovak poet and writer. He focused mainly on modern poetry and experimental literature. His works are known for their deep philosophical and emotional intensity.',
+                ['lang' => 'sk', 'content' => '<p>Slovenský básnik a spisovateľ. Venoval sa hlavne modernej poézii a experimentálnej literatúre. Jeho diela sú známe pre svoju hĺboku filozofickú a emotionálnu intenzitu.</p>'],
+                ['lang' => 'en', 'content' => '<p>Slovak poet and writer. He focused mainly on modern poetry and experimental literature. His works are known for their deep philosophical and emotional intensity.</p>'],
             ],
             'image_path' => null,
         ]);

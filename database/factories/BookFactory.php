@@ -21,18 +21,18 @@ class BookFactory extends Factory
         
         return [
             'title' => [
-                'sk' => $titleSk,
-                'en' => $titleEn,
+                ['lang' => 'sk', 'content' => '<p>' . $titleSk . '</p>'],
+                ['lang' => 'en', 'content' => '<p>' . $titleEn . '</p>'],
             ],
             'cover' => null, // Will be set in seeder
             'publishing_year' => fake()->numberBetween(2000, 2024),
             'publishing_house' => [
-                'sk' => fake()->company(),
-                'en' => fake()->company(),
+                ['lang' => 'sk', 'content' => '<p>' . fake()->company() . '</p>'],
+                ['lang' => 'en', 'content' => '<p>' . fake()->company() . '</p>'],
             ],
             'description' => [
-                'sk' => fake()->paragraph(3),
-                'en' => fake()->paragraph(3),
+                ['lang' => 'sk', 'content' => '<p>' . fake()->paragraph(3) . '</p>'],
+                ['lang' => 'en', 'content' => '<p>' . fake()->paragraph(3) . '</p>'],
             ],
             'pdf_path' => null,
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Authors\Tables;
 
+use App\Filament\Traits\TranslationHelper;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -11,6 +12,8 @@ use Filament\Tables\Table;
 
 class AuthorsTable
 {
+    use TranslationHelper;
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -25,36 +28,7 @@ class AuthorsTable
 
                 TextColumn::make('bio')
                     ->state(function ($record) {
-                        // Get the raw bio data from the record
-                        $bio = $record->bio;
-
-                        if (empty($bio)) {
-                            return 'N/A';
-                        }
-
-                        // Convert ArrayObject or object to array if needed
-                        if (is_object($bio)) {
-                            $bio = json_decode(json_encode($bio), true);
-                        }
-
-                        if (!is_array($bio)) {
-                            return 'N/A';
-                        }
-
-                        // Handle new format: [{"lang":"sk","content":"..."},{"lang":"en","content":"..."}]
-                        // Try Slovak first
-                        foreach ($bio as $item) {
-                            if (is_array($item) && isset($item['lang']) && $item['lang'] === 'sk' && isset($item['content'])) {
-                                return strip_tags($item['content']);
-                            }
-                        }
-
-                        // Fallback to first item with content
-                        if (is_array($bio[0]) && isset($bio[0]['content'])) {
-                            return strip_tags($bio[0]['content']);
-                        }
-
-                        return 'N/A';
+                        return self::getTranslation($record->bio);
                     })
                     ->limit(100),
             ])

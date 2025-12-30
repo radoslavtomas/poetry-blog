@@ -31,12 +31,12 @@ class PoemFactory extends Factory
         
         return [
             'title' => [
-                'sk' => fake()->sentence(rand(2, 5), false),
-                'en' => fake()->sentence(rand(2, 5), false),
+                ['lang' => 'sk', 'content' => '<p>' . fake()->sentence(rand(2, 5), false) . '</p>'],
+                ['lang' => 'en', 'content' => '<p>' . fake()->sentence(rand(2, 5), false) . '</p>'],
             ],
             'body' => [
-                'sk' => $bodySk,
-                'en' => $bodyEn,
+                ['lang' => 'sk', 'content' => '<p>' . nl2br($bodySk) . '</p>'],
+                ['lang' => 'en', 'content' => '<p>' . nl2br($bodyEn) . '</p>'],
             ],
             'book_id' => null,
             'source_id' => null,

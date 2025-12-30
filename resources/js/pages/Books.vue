@@ -48,15 +48,14 @@ const { t, trans } = useTranslation()
             </svg>
           </div>
           <div class="p-4">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-              {{ trans(book.title) }}
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" v-html="trans(book.title)">
             </h2>
             <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
               <p>
                 <span class="font-medium">{{ t('publishing_year') }}:</span> {{ book.publishing_year }}
               </p>
               <p>
-                <span class="font-medium">{{ t('publishing_house') }}:</span> {{ trans(book.publishing_house) }}
+                <span class="font-medium">{{ t('publishing_house') }}:</span> <span v-html="trans(book.publishing_house)"></span>
               </p>
               <p class="text-indigo-600 dark:text-indigo-400">
                 {{ book.poems_count }} {{ book.poems_count === 1 ? 'poem' : 'poems' }}

@@ -58,8 +58,7 @@ const { t, trans } = useTranslation()
 
         <!-- Book Info -->
         <div class="md:col-span-2">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            {{ trans(book.title) }}
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4" v-html="trans(book.title)">
           </h1>
           
           <div class="space-y-2 text-gray-600 dark:text-gray-400 mb-6">
@@ -67,7 +66,7 @@ const { t, trans } = useTranslation()
               <span class="font-semibold">{{ t('publishing_year') }}:</span> {{ book.publishing_year }}
             </p>
             <p>
-              <span class="font-semibold">{{ t('publishing_house') }}:</span> {{ trans(book.publishing_house) }}
+              <span class="font-semibold">{{ t('publishing_house') }}:</span> <span v-html="trans(book.publishing_house)"></span>
             </p>
           </div>
 
@@ -90,8 +89,8 @@ const { t, trans } = useTranslation()
             <Link
               :href="poems.show.url({ poem: poem.id })"
               class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              v-html="trans(poem.title)"
             >
-              {{ trans(poem.title) }}
             </Link>
           </li>
         </ul>

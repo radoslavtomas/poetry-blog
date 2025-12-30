@@ -22,9 +22,9 @@ class Book extends Model
     protected function casts(): array
     {
         return [
-            'title' => AsArrayObject::class,
-            'publishing_house' => AsArrayObject::class,
-            'description' => AsArrayObject::class,
+            'title' => 'array',
+            'publishing_house' => 'array',
+            'description' => 'array',
         ];
     }
 

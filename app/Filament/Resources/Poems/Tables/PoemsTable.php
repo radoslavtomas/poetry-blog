@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Poems\Tables;
 
+use App\Filament\Traits\TranslationHelper;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -11,28 +12,38 @@ use Filament\Tables\Table;
 
 class PoemsTable
 {
+    use TranslationHelper;
+
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('title')
-                    ->formatStateUsing(fn ($state, $record) => is_array($state) ? ($state['sk'] ?? $state['en'] ?? 'N/A') : ($record->title['sk'] ?? $record->title['en'] ?? 'N/A'))
+                    ->state(function ($record) {
+                        return self::getTranslation($record->title);
+                    })
                     ->searchable(),
-                    
+
                 TextColumn::make('book.title')
-                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state['sk'] ?? $state['en'] ?? '-') : '-')
+                    ->state(function ($record) {
+                        if (!$record || !$record->book) return '-';
+                        return self::getTranslation($record->book->title);
+                    })
                     ->label('Book')
                     ->sortable(),
-                    
+
                 TextColumn::make('source.name')
-                    ->formatStateUsing(fn ($state) => is_array($state) ? ($state['sk'] ?? $state['en'] ?? '-') : '-')
+                    ->state(function ($record) {
+                        if (!$record || !$record->source) return '-';
+                        return self::getTranslation($record->source->name);
+                    })
                     ->label('Source')
                     ->sortable(),
-                    
+
                 TextColumn::make('position_in_book')
                     ->label('Position')
                     ->sortable(),
-                    
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
@@ -40,12 +51,12 @@ class PoemsTable
             ->filters([
                 SelectFilter::make('book_id')
                     ->relationship('book', 'id')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->title['sk'] ?? $record->title['en'] ?? 'Unknown')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => self::getTranslation($record->title))
                     ->label('Book'),
-                    
+
                 SelectFilter::make('source_id')
                     ->relationship('source', 'id')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['sk'] ?? $record->name['en'] ?? 'Unknown')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => self::getTranslation($record->name))
                     ->label('Source'),
             ])
             ->recordActions([
