@@ -62,9 +62,7 @@ const { t, trans } = useTranslation()
                 {{ book.poems_count }} {{ book.poems_count === 1 ? 'poem' : 'poems' }}
               </p>
             </div>
-            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
-              {{ trans(book.description) }}
-            </p>
+            <div class="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-3" v-html="trans(book.description)"></div>
           </div>
         </Link>
       </div>

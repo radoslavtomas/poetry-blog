@@ -72,9 +72,7 @@ const { t, trans } = useTranslation()
           </div>
 
           <div class="prose dark:prose-invert max-w-none">
-            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-              {{ trans(book.description) }}
-            </p>
+            <div class="text-gray-700 dark:text-gray-300 leading-relaxed" v-html="trans(book.description)"></div>
           </div>
         </div>
       </div>

@@ -19,12 +19,43 @@ class AuthorsTable
                     ->label('Image')
                     ->disk('public')
                     ->circular(),
-                    
+
                 TextColumn::make('name')
                     ->searchable(),
-                    
+
                 TextColumn::make('bio')
-                    ->formatStateUsing(fn ($state, $record) => is_array($state) ? ($state['sk'] ?? $state['en'] ?? 'N/A') : ($record->bio['sk'] ?? $record->bio['en'] ?? 'N/A'))
+                    ->state(function ($record) {
+                        // Get the raw bio data from the record
+                        $bio = $record->bio;
+
+                        if (empty($bio)) {
+                            return 'N/A';
+                        }
+
+                        // Convert ArrayObject or object to array if needed
+                        if (is_object($bio)) {
+                            $bio = json_decode(json_encode($bio), true);
+                        }
+
+                        if (!is_array($bio)) {
+                            return 'N/A';
+                        }
+
+                        // Handle new format: [{"lang":"sk","content":"..."},{"lang":"en","content":"..."}]
+                        // Try Slovak first
+                        foreach ($bio as $item) {
+                            if (is_array($item) && isset($item['lang']) && $item['lang'] === 'sk' && isset($item['content'])) {
+                                return strip_tags($item['content']);
+                            }
+                        }
+
+                        // Fallback to first item with content
+                        if (is_array($bio[0]) && isset($bio[0]['content'])) {
+                            return strip_tags($bio[0]['content']);
+                        }
+
+                        return 'N/A';
+                    })
                     ->limit(100),
             ])
             ->filters([

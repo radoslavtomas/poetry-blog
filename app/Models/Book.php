@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,11 +19,14 @@ class Book extends Model
         'pdf_path',
     ];
 
-    protected $casts = [
-        'title' => 'array',
-        'publishing_house' => 'array',
-        'description' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'title' => AsArrayObject::class,
+            'publishing_house' => AsArrayObject::class,
+            'description' => AsArrayObject::class,
+        ];
+    }
 
     public function poems(): HasMany
     {

@@ -11,6 +11,33 @@ use Filament\Tables\Table;
 
 class BooksTable
 {
+    protected static function getTranslation($state): string
+    {
+        if (!is_array($state)) {
+            return 'N/A';
+        }
+        
+        // Check if it's repeater format: [{"lang":"sk","content":"..."}, ...]
+        if (isset($state[0]) && is_array($state[0]) && isset($state[0]['lang'])) {
+            // Try to find Slovak translation
+            foreach ($state as $item) {
+                if (isset($item['lang']) && $item['lang'] === 'sk' && isset($item['content'])) {
+                    return strip_tags($item['content']);
+                }
+            }
+            // Fallback to first available
+            foreach ($state as $item) {
+                if (isset($item['content'])) {
+                    return strip_tags($item['content']);
+                }
+            }
+            return 'N/A';
+        }
+        
+        // Old format: {"sk": "...", "en": "..."}
+        return $state['sk'] ?? $state['en'] ?? 'N/A';
+    }
+    
     public static function configure(Table $table): Table
     {
         return $table
@@ -20,7 +47,9 @@ class BooksTable
                     ->disk('public'),
                     
                 TextColumn::make('title')
-                    ->formatStateUsing(fn ($state, $record) => is_array($state) ? ($state['sk'] ?? $state['en'] ?? 'N/A') : ($record->title['sk'] ?? $record->title['en'] ?? 'N/A'))
+                    ->formatStateUsing(function ($state) {
+                        return self::getTranslation($state);
+                    })
                     ->searchable(),
                     
                 TextColumn::make('publishing_year')
@@ -28,7 +57,9 @@ class BooksTable
                     ->sortable(),
                     
                 TextColumn::make('publishing_house')
-                    ->formatStateUsing(fn ($state, $record) => is_array($state) ? ($state['sk'] ?? $state['en'] ?? 'N/A') : ($record->publishing_house['sk'] ?? $record->publishing_house['en'] ?? 'N/A'))
+                    ->formatStateUsing(function ($state) {
+                        return self::getTranslation($state);
+                    })
                     ->label('Publisher'),
                     
                 TextColumn::make('poems_count')

@@ -48,9 +48,7 @@ const { t, trans } = useTranslation()
                 {{ author.name }}
               </h2>
               <div class="prose dark:prose-invert max-w-none">
-                <div class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-                  {{ trans(author.bio) }}
-                </div>
+                <div class="text-gray-700 dark:text-gray-300 leading-relaxed" v-html="trans(author.bio)"></div>
               </div>
             </div>
           </div>
