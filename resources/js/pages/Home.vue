@@ -36,21 +36,21 @@ const poemExcerpt = computed(() => {
   if (body.length <= 150) {
     return body
   }
-  
+
   // Find the last newline before character 150
   const excerpt = body.substring(0, 150)
   const lastNewLine = excerpt.lastIndexOf('\n')
-  
+
   if (lastNewLine > 0) {
     return excerpt.substring(0, lastNewLine)
   }
-  
+
   // If no newline found, try to break at last space
   const lastSpace = excerpt.lastIndexOf(' ')
   if (lastSpace > 0) {
     return excerpt.substring(0, lastSpace)
   }
-  
+
   return excerpt
 })
 
@@ -65,10 +65,27 @@ const displayedBody = computed(() => {
   return poemExcerpt.value
 })
 
+// Post-process poem body to add styling to empty paragraphs
+const processedBody = computed(() => {
+  const body = displayedBody.value
+  // Replace empty <p></p> tags with styled versions
+  return body.replace(/<p><\/p>/g, '<p style="min-height: 1.5em; display: block;"></p>')
+})
+
 const getAnotherPoem = () => {
   router.reload({ only: ['poem'] })
 }
 </script>
+
+<style>
+/* Create visual breaks for paragraphs in poem body */
+.poem-body p {
+  min-height: 1.5em;
+  line-height: 1.5em;
+  display: block;
+  margin: 0;
+}
+</style>
 
 <template>
   <MainLayout>
@@ -77,11 +94,11 @@ const getAnotherPoem = () => {
         <div class="p-8">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4" v-html="trans(poem.title)">
           </h1>
-          
-          <div class="prose dark:prose-invert max-w-none">
-            <div class="whitespace-pre-wrap font-serif text-lg text-gray-700 dark:text-gray-300 leading-relaxed" v-html="displayedBody"></div>
-          </div>
-          
+
+           <div class="prose dark:prose-invert max-w-none">
+             <div class="poem-body whitespace-pre-wrap font-serif text-lg text-gray-700 dark:text-gray-300 leading-relaxed" v-html="processedBody"></div>
+           </div>
+
           <div v-if="shouldShowExcerpt && !showFullPoem" class="mt-4">
             <button
               @click="showFullPoem = true"
@@ -90,7 +107,7 @@ const getAnotherPoem = () => {
               {{ t('read_more') }}
             </button>
           </div>
-          
+
           <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
             <p class="text-sm text-gray-600 dark:text-gray-400">
               <span v-if="poem.book">
@@ -112,7 +129,7 @@ const getAnotherPoem = () => {
             </p>
           </div>
         </div>
-        
+
         <div class="px-8 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
           <button
             @click="getAnotherPoem"
@@ -122,7 +139,7 @@ const getAnotherPoem = () => {
           </button>
         </div>
       </div>
-      
+
       <div v-else class="text-center py-12">
         <p class="text-gray-600 dark:text-gray-400">{{ t('no_poems') }}</p>
       </div>

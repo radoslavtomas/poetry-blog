@@ -4,6 +4,7 @@ import MainLayout from '@/layouts/MainLayout.vue'
 import { useTranslation } from '@/composables/useTranslation'
 import * as books from '@/routes/books'
 import * as poems from '@/routes/poems'
+import { computed } from 'vue'
 
 interface Book {
   id: number
@@ -36,7 +37,24 @@ const props = defineProps<{
 }>()
 
 const { t, trans } = useTranslation()
+
+// Post-process poem body to add styling to empty paragraphs
+const processedPoemBody = computed(() => {
+  const body = trans(props.poem.body)
+  // Replace empty <p></p> tags with styled versions
+  return body.replace(/<p><\/p>/g, '<p style="min-height: 1.5em; display: block;"></p>')
+})
 </script>
+
+<style>
+/* Create visual breaks for paragraphs in poem body */
+.poem-body p {
+  min-height: 1.5em;
+  line-height: 1.5em;
+  display: block;
+  margin: 0;
+}
+</style>
 
 <template>
   <MainLayout>
@@ -45,10 +63,10 @@ const { t, trans } = useTranslation()
         <div class="p-8">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6" v-html="trans(poem.title)">
           </h1>
-          
-          <div class="prose dark:prose-invert max-w-none mb-8">
-            <div class="whitespace-pre-wrap font-serif text-lg text-gray-700 dark:text-gray-300 leading-relaxed" v-html="trans(poem.body)"></div>
-          </div>
+
+           <div class="prose dark:prose-invert max-w-none mb-8">
+             <div class="poem-body whitespace-pre-wrap font-serif text-lg text-gray-700 dark:text-gray-300 leading-relaxed" v-html="processedPoemBody"></div>
+           </div>
 
           <!-- Source/Book Info -->
           <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -79,11 +97,11 @@ const { t, trans } = useTranslation()
               :href="books.show.url({ book: poem.book.id })"
               class="flex items-center space-x-4 hover:opacity-80 transition-opacity"
             >
-              <div v-if="poem.book.cover" class="w-16 h-20 bg-gray-200 dark:bg-gray-600 rounded overflow-hidden flex-shrink-0">
+              <div v-if="poem.book.cover" class="w-16 h-auto bg-gray-200 dark:bg-gray-600 rounded overflow-hidden flex-shrink-0">
                 <img
                   :src="`/storage/${poem.book.cover}`"
                   :alt="trans(poem.book.title)"
-                  class="w-full h-full object-cover"
+                  class="w-full h-auto"
                 />
               </div>
               <div v-else class="w-16 h-20 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center flex-shrink-0">
@@ -91,11 +109,11 @@ const { t, trans } = useTranslation()
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ t('back_to_book') }}</p>
-                <p class="text-sm font-medium text-gray-900 dark:text-white" v-html="trans(poem.book.title)"></p>
-              </div>
-            </Link>
+               <div>
+                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ t('back_to_book') }}</p>
+                 <p class="text-sm font-medium text-gray-900 dark:text-white mb-2" v-html="trans(poem.book.title)"></p>
+               </div>
+             </Link>
           </div>
 
           <!-- Prev/Next Navigation -->
@@ -110,7 +128,7 @@ const { t, trans } = useTranslation()
               </svg>
               <div class="text-left">
                 <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('previous_poem') }}</p>
-                <p class="font-medium line-clamp-1" v-html="trans(prevPoem.title)"></p>
+                 <p class="font-medium mb-2" v-html="trans(prevPoem.title)"></p>
               </div>
             </Link>
             <div v-else></div>
@@ -120,10 +138,10 @@ const { t, trans } = useTranslation()
               :href="poems.show.url({ poem: nextPoem.id })"
               class="flex items-center text-sm text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group"
             >
-              <div class="text-right">
-                <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('next_poem') }}</p>
-                <p class="font-medium line-clamp-1" v-html="trans(nextPoem.title)"></p>
-              </div>
+               <div class="text-right">
+                 <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('next_poem') }}</p>
+                 <p class="font-medium mb-2" v-html="trans(nextPoem.title)"></p>
+               </div>
               <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>

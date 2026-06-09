@@ -35,11 +35,11 @@ const { t, trans } = useTranslation()
           :href="bookRoutes.show.url({ book: book.id })"
           class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow overflow-hidden group"
         >
-          <div v-if="book.cover" class="aspect-[3/4] bg-gray-200 dark:bg-gray-700 overflow-hidden">
+          <div v-if="book.cover" class="p-10">
             <img
               :src="`/storage/${book.cover}`"
               :alt="trans(book.title)"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              class="w-full h-auto rounded group-hover:scale-102 transition-transform duration-300"
             />
           </div>
           <div v-else class="aspect-[3/4] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -48,7 +48,7 @@ const { t, trans } = useTranslation()
             </svg>
           </div>
           <div class="p-4">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" v-html="trans(book.title)">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:underline" v-html="trans(book.title)">
             </h2>
             <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
               <p>

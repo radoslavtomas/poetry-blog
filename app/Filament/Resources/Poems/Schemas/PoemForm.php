@@ -80,7 +80,6 @@ class PoemForm
                     ->label('Book')
                     ->relationship('book', 'id')
                     ->getOptionLabelFromRecordUsing(fn ($record) => self::getTranslation($record->title))
-                    ->searchable()
                     ->nullable()
                     ->reactive(),
 
@@ -94,7 +93,6 @@ class PoemForm
                     ->label('Source')
                     ->relationship('source', 'id')
                     ->getOptionLabelFromRecordUsing(fn ($record) => self::getTranslation($record->name))
-                    ->searchable()
                     ->nullable()
                     ->hidden(fn (callable $get) => $get('book_id')),
             ])->columns(1);

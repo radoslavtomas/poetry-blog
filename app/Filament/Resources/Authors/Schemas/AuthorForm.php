@@ -53,6 +53,7 @@ class AuthorForm
                 FileUpload::make('image_path')
                     ->label('Author Image')
                     ->image()
+                    ->disk('public')
                     ->directory('authors')
                     ->nullable(),
             ])->columns(1);

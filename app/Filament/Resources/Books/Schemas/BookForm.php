@@ -45,6 +45,7 @@ class BookForm
                 FileUpload::make('cover')
                     ->label('Cover Image')
                     ->image()
+                    ->disk('public')
                     ->directory('books')
                     ->nullable(),
 
@@ -116,6 +117,7 @@ class BookForm
                 FileUpload::make('pdf_path')
                     ->label('PDF File')
                     ->acceptedFileTypes(['application/pdf'])
+                    ->disk('public')
                     ->directory('books')
                     ->nullable(),
             ])->columns(1);

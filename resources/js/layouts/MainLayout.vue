@@ -38,7 +38,13 @@ const currentRoute = computed(() => page.url)
     <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-colors">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-          <div class="flex">
+          <div class="flex items-center">
+            <!-- Logo -->
+            <Link :href="home.url()" class="flex-shrink-0 mr-8">
+              <div class="flex items-center justify-center font-logo w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-purple-600 dark:from-teal-600 dark:to-purple-700 text-white font-bold shadow-md hover:shadow-lg transition-shadow">
+                RT
+              </div>
+            </Link>
             <!-- Navigation Links -->
             <div class="hidden sm:flex sm:space-x-8">
               <Link
