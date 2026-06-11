@@ -66,7 +66,7 @@ const { t, trans } = useTranslation();
                         v-if="book.pdf_path"
                         :href="`/storage/${book.pdf_path}`"
                         target="_blank"
-                        class="mt-4 block w-full rounded-md bg-slate-500 px-4 py-2 text-center text-white transition-colors hover:bg-slate-600"
+                        class="mt-4 block w-full rounded-md bg-teal-500 px-4 py-2 text-center text-white transition-colors hover:bg-teal-600"
                     >
                         Download PDF
                     </a>
@@ -125,9 +125,9 @@ const { t, trans } = useTranslation();
                         </span>
                         <Link
                             :href="poems.show.url({ poem: poem.id })"
-                            class="text-gray-700 transition-colors hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400"
-                            v-html="trans(poem.title)"
+                            class="text-gray-700 transition-colors hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400"
                         >
+                        <span v-html="trans(poem.title)"></span>
                         </Link>
                     </li>
                 </ul>

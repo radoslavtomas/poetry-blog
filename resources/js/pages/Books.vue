@@ -57,7 +57,7 @@ const { t, trans } = useTranslation()
               <p>
                 <span class="font-medium">{{ t('publishing_house') }}:</span> <span v-html="trans(book.publishing_house)"></span>
               </p>
-              <p class="text-indigo-600 dark:text-indigo-400">
+              <p class="text-purple-600 dark:text-purple-400">
                 {{ book.poems_count }} {{ book.poems_count === 1 ? 'poem' : 'poems' }}
               </p>
             </div>

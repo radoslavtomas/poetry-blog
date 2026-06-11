@@ -55,7 +55,7 @@ class AuthorForm
                     ->image()
                     ->disk('public')
                     ->directory('authors')
-                    ->nullable(),
+                    ->nullable()
             ])->columns(1);
     }
 }

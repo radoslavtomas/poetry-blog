@@ -102,7 +102,7 @@ const getAnotherPoem = () => {
           <div v-if="shouldShowExcerpt && !showFullPoem" class="mt-4">
             <button
               @click="showFullPoem = true"
-              class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
+              class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium cursor-pointer"
             >
               {{ t('read_more') }}
             </button>
@@ -114,9 +114,9 @@ const getAnotherPoem = () => {
                 {{ t('published_in') }}:
                 <Link
                   :href="books.show.url({ book: poem.book.id })"
-                  class="text-indigo-600 dark:text-indigo-400 hover:underline"
-                  v-html="trans(poem.book.title)"
+                  class="text-purple-600 dark:text-purple-400 hover:underline cursor-pointer"
                 >
+                  <span v-html="trans(poem.book.title)"></span>
                 </Link>
               </span>
               <span v-else-if="poem.source">
@@ -133,7 +133,7 @@ const getAnotherPoem = () => {
         <div class="px-8 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
           <button
             @click="getAnotherPoem"
-            class="w-full sm:w-auto px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition-colors"
+            class="w-full sm:w-auto px-6 py-2 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-md transition-colors cursor-pointer"
           >
             {{ t('get_another_poem') }}
           </button>
