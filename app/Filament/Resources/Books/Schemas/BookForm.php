@@ -119,6 +119,7 @@ class BookForm
                     ->acceptedFileTypes(['application/pdf'])
                     ->disk('public')
                     ->directory('books')
+                    ->preserveFilenames()
                     ->nullable(),
             ])->columns(1);
     }
