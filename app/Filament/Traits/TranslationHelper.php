@@ -15,7 +15,7 @@ trait TranslationHelper
             $state = json_decode(json_encode($state), true);
         }
 
-        if (!is_array($state)) {
+        if (! is_array($state)) {
             return 'N/A';
         }
 
@@ -33,6 +33,7 @@ trait TranslationHelper
                     return strip_tags($item['content']);
                 }
             }
+
             return 'N/A';
         }
 

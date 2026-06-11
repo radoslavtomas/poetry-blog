@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
+ * @extends Factory<Book>
  */
 class BookFactory extends Factory
 {
@@ -18,21 +19,21 @@ class BookFactory extends Factory
     {
         $titleSk = fake()->sentence(rand(2, 4), false);
         $titleEn = fake()->sentence(rand(2, 4), false);
-        
+
         return [
             'title' => [
-                ['lang' => 'sk', 'content' => '<p>' . $titleSk . '</p>'],
-                ['lang' => 'en', 'content' => '<p>' . $titleEn . '</p>'],
+                ['lang' => 'sk', 'content' => '<p>'.$titleSk.'</p>'],
+                ['lang' => 'en', 'content' => '<p>'.$titleEn.'</p>'],
             ],
             'cover' => null, // Will be set in seeder
             'publishing_year' => fake()->numberBetween(2000, 2024),
             'publishing_house' => [
-                ['lang' => 'sk', 'content' => '<p>' . fake()->company() . '</p>'],
-                ['lang' => 'en', 'content' => '<p>' . fake()->company() . '</p>'],
+                ['lang' => 'sk', 'content' => '<p>'.fake()->company().'</p>'],
+                ['lang' => 'en', 'content' => '<p>'.fake()->company().'</p>'],
             ],
             'description' => [
-                ['lang' => 'sk', 'content' => '<p>' . fake()->paragraph(3) . '</p>'],
-                ['lang' => 'en', 'content' => '<p>' . fake()->paragraph(3) . '</p>'],
+                ['lang' => 'sk', 'content' => '<p>'.fake()->paragraph(3).'</p>'],
+                ['lang' => 'en', 'content' => '<p>'.fake()->paragraph(3).'</p>'],
             ],
             'pdf_path' => null,
         ];

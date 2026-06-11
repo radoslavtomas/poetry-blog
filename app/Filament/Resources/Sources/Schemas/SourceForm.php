@@ -41,7 +41,7 @@ class SourceForm
                     ->collapsible()
                     ->itemLabel(fn (array $state): ?string => strtoupper($state['lang'] ?? 'Translation'))
                     ->required(),
-                    
+
                 Select::make('type')
                     ->label('Type')
                     ->options([
@@ -51,7 +51,7 @@ class SourceForm
                         'other' => 'Other',
                     ])
                     ->required(),
-                    
+
                 TextInput::make('url')
                     ->label('URL')
                     ->url()

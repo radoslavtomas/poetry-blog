@@ -27,7 +27,10 @@ class PoemsTable
 
                 TextColumn::make('book.title')
                     ->state(function ($record) {
-                        if (!$record || !$record->book) return '-';
+                        if (! $record || ! $record->book) {
+                            return '-';
+                        }
+
                         return self::getTranslation($record->book->title);
                     })
                     ->label('Book')
@@ -35,7 +38,10 @@ class PoemsTable
 
                 TextColumn::make('source.name')
                     ->state(function ($record) {
-                        if (!$record || !$record->source) return '-';
+                        if (! $record || ! $record->source) {
+                            return '-';
+                        }
+
                         return self::getTranslation($record->source->name);
                     })
                     ->label('Source')
@@ -47,7 +53,7 @@ class PoemsTable
                     ->sortable(),
 
                 TextColumn::make('created_at')
-                    ->dateTime("d/m/Y H:m")
+                    ->dateTime('d/m/Y H:m')
                     ->sortable(),
             ])
             ->filters([

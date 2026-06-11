@@ -11,7 +11,7 @@ class AboutController extends Controller
     public function index(): Response
     {
         $author = Author::first();
-        
+
         return Inertia::render('AboutMe', [
             'author' => $author,
         ]);

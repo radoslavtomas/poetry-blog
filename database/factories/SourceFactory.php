@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Source;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Source>
+ * @extends Factory<Source>
  */
 class SourceFactory extends Factory
 {
@@ -17,11 +18,11 @@ class SourceFactory extends Factory
     public function definition(): array
     {
         $type = fake()->randomElement(['newspaper', 'magazine', 'website', 'other']);
-        
+
         return [
             'name' => [
-                ['lang' => 'sk', 'content' => '<p>' . fake()->company() . '</p>'],
-                ['lang' => 'en', 'content' => '<p>' . fake()->company() . '</p>'],
+                ['lang' => 'sk', 'content' => '<p>'.fake()->company().'</p>'],
+                ['lang' => 'en', 'content' => '<p>'.fake()->company().'</p>'],
             ],
             'type' => $type,
             'url' => $type === 'website' ? fake()->url() : null,

@@ -7,7 +7,6 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PoemController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Poem extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title',
         'body',

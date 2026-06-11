@@ -9,7 +9,7 @@ interface Author {
     image_path: string | null;
 }
 
-const props = defineProps<{
+const { author } = defineProps<{
     author: Author | null;
 }>();
 

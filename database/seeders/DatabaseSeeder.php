@@ -22,20 +22,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@example.com',
         ]);
-        
+
         // Create languages
         Language::create([
             'code' => 'sk',
             'name' => 'Slovenčina',
             'is_default' => true,
         ]);
-        
+
         Language::create([
             'code' => 'en',
             'name' => 'English',
             'is_default' => false,
         ]);
-        
+
         // Create author
         Author::create([
             'name' => 'Janko Hráško',
@@ -45,13 +45,13 @@ class DatabaseSeeder extends Seeder
             ],
             'image_path' => null,
         ]);
-        
+
         // Create 8 books
         $books = Book::factory(8)->create();
-        
+
         // Create 5 sources
         $sources = Source::factory(5)->create();
-        
+
         // Create poems for each book (5-8 poems per book)
         foreach ($books as $book) {
             $poemCount = rand(5, 8);
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
-        
+
         // Create poems for sources (2-4 poems per source)
         foreach ($sources as $source) {
             $poemCount = rand(2, 4);
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
                 'position_in_book' => null,
             ]);
         }
-        
+
         // Create 10 unpublished poems
         Poem::factory(10)->create([
             'book_id' => null,

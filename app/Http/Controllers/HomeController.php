@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index(): Response
     {
         $poem = Poem::with(['book', 'source'])->inRandomOrder()->first();
-        
+
         return Inertia::render('Home', [
             'poem' => $poem,
         ]);

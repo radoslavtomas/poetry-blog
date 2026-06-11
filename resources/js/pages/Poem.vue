@@ -4,7 +4,6 @@ import MainLayout from '@/layouts/MainLayout.vue';
 import { useTranslation } from '@/composables/useTranslation';
 import * as books from '@/routes/books';
 import * as poems from '@/routes/poems';
-import { computed } from 'vue';
 
 interface Book {
     id: number;

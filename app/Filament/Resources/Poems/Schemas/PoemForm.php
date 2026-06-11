@@ -87,7 +87,7 @@ class PoemForm
                     ->label('Position in Book')
                     ->numeric()
                     ->nullable()
-                    ->hidden(fn (callable $get) => !$get('book_id')),
+                    ->hidden(fn (callable $get) => ! $get('book_id')),
 
                 Select::make('source_id')
                     ->label('Source')

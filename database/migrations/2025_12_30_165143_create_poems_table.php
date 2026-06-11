@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('source_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('position_in_book')->nullable();
             $table->timestamps();
-            
+
             $table->index('book_id');
             $table->index('source_id');
         });

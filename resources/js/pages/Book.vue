@@ -20,7 +20,7 @@ interface Book {
     poems: Poem[];
 }
 
-const props = defineProps<{
+const { book } = defineProps<{
     book: Book;
 }>();
 
@@ -35,7 +35,7 @@ const { t, trans } = useTranslation();
                 <div class="md:col-span-1">
                     <div
                         v-if="book.cover"
-                        class="overflow-hidden rounded-lg p-8 border border-gray-200 dark:border-gray-800 shadow dark:bg-gray-800"
+                        class="overflow-hidden rounded-lg border border-gray-200 p-8 shadow dark:border-gray-800 dark:bg-gray-800"
                     >
                         <img
                             :src="`/storage/${book.cover}`"
@@ -127,7 +127,7 @@ const { t, trans } = useTranslation();
                             :href="poems.show.url({ poem: poem.id })"
                             class="text-gray-700 transition-colors hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400"
                         >
-                        <span v-html="trans(poem.title)"></span>
+                            <span v-html="trans(poem.title)"></span>
                         </Link>
                     </li>
                 </ul>
